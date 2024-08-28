@@ -1,0 +1,42 @@
+syntax = "proto3";
+
+package command;
+
+option go_package = "github.com/amiosamu/api-gateway/pkg/command/pb";
+
+// Enum Message type
+enum MessageType {
+  UNKNOWN_TYPE = 0;
+  LOGIN_PASSWORD = 1;
+  TEXT = 2;
+  BINNARY = 3;
+  CARD = 4;
+}
+
+// // Enum operation type
+// enum OperationType {
+//   UNKNOWN_OPERATION = 0;
+//   ADD = 1;
+//   MODIFY = 2;
+//   DELETE = 3;
+// }
+
+// Command
+message CommandRequest {
+  int64 id = 1;
+//  OperationType operation = 2;
+  MessageType type = 2;
+  int64 userID = 3;
+  bytes data = 4;
+  string meta = 5;
+}
+
+message CommandResponse {
+}
+
+service CommandService {
+    //rpc Command(CommandRequest) returns (CommandResponse) {}
+    rpc AddCommand(CommandRequest) returns (CommandResponse) {}
+    rpc ModifyCommand(CommandRequest) returns (CommandResponse) {}
+    rpc DeleteCommand(CommandRequest) returns (CommandResponse) {}
+}

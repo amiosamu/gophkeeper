@@ -1,0 +1,86 @@
+syntax = "proto3";
+
+package services;
+
+option go_package = "github.com/amiosamu/gophkeeper/api-gateway/pkg/services/pb";
+
+// Auth service
+// Register
+message RegisterRequest {
+  string userName = 1;
+  string password = 2;
+}
+  
+message RegisterResponse {
+  string token = 1;
+}
+
+// Login 
+message LoginRequest {
+  string userName = 1;
+  string password = 2;
+}
+    
+message LoginResponse {
+  string token = 1;
+}
+
+// Query service
+// Enum Message type
+enum MessageType {
+  UNKNOWN_TYPE = 0;
+  LOGIN_PASSWORD = 1;
+  TEXT = 2;
+  BINNARY = 3;
+  CARD = 4;
+  ANY = 5;
+}
+  
+// Query
+message QueryRequest {
+  MessageType type = 1;
+}
+
+message QueryResponseArray{
+  message QueryResponse {
+    int64 id = 1;
+    MessageType type = 2;
+    bytes data = 3;
+    string meta = 4;
+  }
+  int64 count = 1;
+  repeated QueryResponse items = 2;
+}
+// Command service
+// Command
+// // Enum operation type
+// enum OperationType {
+//   UNKNOWN_OPERATION = 0;
+//   ADD = 1;
+//   MODIFY = 2;
+//   DELETE = 3;
+// }
+  
+message CommandRequest {
+  int64 id = 1;
+//  OperationType operation = 2;
+  MessageType type = 2;
+  bytes data = 3;
+  string meta = 4;
+}
+  
+message CommandResponse {
+}
+  
+service APIGatewayService {
+// Auth service
+  rpc Register(RegisterRequest) returns (RegisterResponse) {}
+  rpc Login(LoginRequest) returns (LoginResponse) {}
+// Query service
+  rpc Query(QueryRequest) returns (QueryResponseArray) {}
+// Command service
+  rpc AddCommand(CommandRequest) returns (CommandResponse) {}
+  rpc ModifyCommand(CommandRequest) returns (CommandResponse) {}
+  rpc DeleteCommand(CommandRequest) returns (CommandResponse) {}
+}  
+  

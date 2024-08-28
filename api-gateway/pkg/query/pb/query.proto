@@ -1,0 +1,27 @@
+syntax = "proto3";
+
+package query;
+
+option go_package = "github.com/amiosamu/gophkeeper/api-gateway/pkg/query/pb";
+
+// Enum Message type
+enum MessageType {
+  UNKNOWN_TYPE = 0;
+  LOGIN_PASSWORD = 1;
+  TEXT = 2;
+  BINNARY = 3;
+  CARD = 4;
+  ANY = 5;
+}
+
+// Query
+message QueryRequest {
+  MessageType type = 1;
+  int64 userID = 2;
+}
+
+import "api-gateway/pkg/services/pb/services.proto";
+
+service QueryService{
+  rpc Query(QueryRequest) returns (services.QueryResponseArray) {} 
+}

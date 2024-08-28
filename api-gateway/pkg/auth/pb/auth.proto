@@ -1,0 +1,42 @@
+syntax = "proto3";
+
+package auth;
+
+option go_package = "github.com/amiosamu/gophkeeper/api-gateway/pkg/auth/pb";
+
+// Register
+message RegisterRequest {
+  string userName = 1;
+  string password = 2;
+}
+
+message RegisterResponse {
+  string token = 1;
+  int64 userID = 2;
+}
+
+// Login
+message LoginRequest {
+  string userName = 1;
+  string password = 2;
+} 
+
+message LoginResponse {
+  string token = 1;
+  int64 userID = 2;
+}
+
+// Verify
+message VerifyRequest {
+  string token = 1;
+}
+
+message VerifyResponse {
+  int64 userID = 1;
+}
+
+service AuthService {
+  rpc Register(RegisterRequest) returns (RegisterResponse) {}
+  rpc Login(LoginRequest) returns (LoginResponse) {}
+  rpc Verify(VerifyRequest) returns(VerifyResponse) {}
+}

@@ -1,0 +1,27 @@
+version: "3.3"
+services:
+  postgres_auth:
+    container_name: gophkeeper_auth_container
+    image: postgres:13.3
+    environment:
+      POSTGRES_DB: "auth_db"
+      POSTGRES_USER: "auth_user"
+      POSTGRES_PASSWORD: "pass"
+      PGDATA: "/var/lib/pg_data"
+    volumes:
+      - .:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+  postgres_query:
+    container_name: gophkeeper_query_data_container
+    image: postgres:13.3
+    environment:
+      POSTGRES_DB: "gophkeeper_db"
+      POSTGRES_USER: "goph_user"
+      POSTGRES_PASSWORD: "pass"
+      PGDATA: "/var/lib/pg_data"
+    volumes:
+      - .:/var/lib/postgresql/data
+    ports:
+      - "5433:5432"
